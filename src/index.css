@@ -1,4 +1,5 @@
 body {
+  background-color: #e6e6e6;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +11,121 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Custom Classes */
+
+.btn-apply{
+  height: 100%;
+  width:100%;
+  font-family: "Roboto";
+  font-weight: 700;
+}
+
+.center-date{
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-color: rgb(156, 156, 156);
+}
+
+.date{
+  font-size: 1.2rem;
+  font-family: "Ubuntu";
+  font-weight: 400;
+}
+
+.job-body-head{
+  border-bottom: 1px solid;
+  border-color: rgb(209, 209, 209);
+  padding-bottom: 1.5vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.job-body-main{
+  border-bottom: 1px solid;
+  border-color: rgb(209, 209, 209);
+  padding: 4vh 1vw;
+}
+
+.job-body-footer{
+  padding: 2vh 1vw 0 1vw;
+}
+
+.job-box{
+  background: #f0f0f0;
+  border-radius: 7px;
+  box-shadow: 0 0 10px #ccc;
+  height: 85vh;
+  width:95vw;
+  padding: 4vh 2vw;
+  margin-top: 3vh;
+}
+
+.job-image{
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.job-role{
+  background-color: rgba(82, 255, 134, 0.664);
+  border-radius: 40px;
+  font-family: "Space Mono";
+  font-weight: 800;
+  margin: 0.8vh 0.8vw;
+  padding: 1vh 0vw 0.2vh;
+}
+
+.welcome-text{
+  color:rgb(87, 107, 255);
+  font-family: "Poppins";
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+/* Bootstrap Classes */
+
+.btn-navbar{
+  color:rgb(82, 82, 82);
+}
+
+.btn-navbar:hover{
+  color:rgb(52, 76, 255);
+}
+
+.card{
+  box-shadow: 0 0px 8px #ccc;
+  font-family: "Roboto";
+}
+
+.card-header{
+  background-color: #f9f9f9;
+  font-family: "Montserrat";
+  font-weight: 700;
+  text-align: left;
+  padding: 2.5vh 1.5vw;
+}
+
+.card-duration{
+  border-left: 0.5px solid;
+  border-color:rgb(205, 205, 205);
+}
+
+.card-footer{
+  margin-top: auto;
+}
+
+.navbar{
+  background-color: #d6ebfb;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  margin-bottom: 6vh;
+  padding: 2vh 1vw;
+}
+
+.navbar-brand{
+  color: rgb(52, 76, 255);
+  font-family: "Montserrat";
+  font-size: 1.8rem;
+  font-weight: 700;
 }
