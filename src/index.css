@@ -34,6 +34,27 @@ code {
   font-weight: 400;
 }
 
+.form-box{
+  background: #f0f0f0;
+  border-radius: 7px;
+  box-shadow: 0 0 10px #ccc;
+  width:95vw;
+  padding: 5vh 2vw;
+  margin-top: 6vh;
+  margin-bottom:4vh;
+}
+
+.form-section{
+  margin: 4vh 0;
+  padding: 0 2vw;
+}
+
+.form-style{
+  font-family: "Space Mono";
+  font-size: 1.2rem;
+  text-align: left;
+}
+
 .job-body-head{
   border-bottom: 1px solid;
   border-color: rgb(209, 209, 209);
@@ -56,10 +77,10 @@ code {
   background: #f0f0f0;
   border-radius: 7px;
   box-shadow: 0 0 10px #ccc;
-  height: 85vh;
   width:95vw;
   padding: 4vh 2vw;
-  margin-top: 3vh;
+  margin-top: 6vh;
+  margin-bottom:4vh;
 }
 
 .job-image{
@@ -69,7 +90,8 @@ code {
 }
 
 .job-role{
-  background-color: rgba(82, 255, 134, 0.664);
+  /* background-color: rgba(82, 255, 134, 0.664); */
+  background-color: rgba(78, 248, 219, 0.664);
   border-radius: 40px;
   font-family: "Space Mono";
   font-weight: 800;
@@ -97,6 +119,7 @@ code {
 .card{
   box-shadow: 0 0px 8px #ccc;
   font-family: "Roboto";
+  margin-bottom: 3vh;
 }
 
 .card-header{
@@ -114,6 +137,17 @@ code {
 
 .card-footer{
   margin-top: auto;
+}
+
+.form{
+  text-align: left;
+}
+
+.form-label{
+  font-family: "Space Mono";
+  font-size: 1.3rem;
+  margin-bottom: 2vh;
+  text-align: left;
 }
 
 .navbar{

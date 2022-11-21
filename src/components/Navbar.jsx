@@ -14,10 +14,10 @@ function Navbar(props)
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <button type="button" className="btn btn-navbar" onClick={() => {props.topArtists();}}><PortraitIcon fontSize="large"/></button>
+                            <button type="button" className="btn btn-navbar" onClick={() => {props.changePage(false);}}><PortraitIcon fontSize="large"/></button>
                         </li>
                         <li className="nav-item">
-                            <button type="button" className="btn btn-navbar" onClick={() => {props.topArtists();}}><WorkIcon fontSize="large"/></button>
+                            <button type="button" className="btn btn-navbar" onClick={() => {props.changePage(true);}}><WorkIcon fontSize="large"/></button>
                         </li>
                     </ul>
                 </div>
