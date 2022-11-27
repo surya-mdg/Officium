@@ -42,6 +42,8 @@ code {
   padding: 5vh 2vw;
   margin-top: 6vh;
   margin-bottom:4vh;
+
+  animation: fadein 0.5s;
 }
 
 .form-section{
@@ -99,11 +101,62 @@ code {
   padding: 1vh 0vw 0.2vh;
 }
 
+.login-box{
+  background: rgb(244, 244, 244);
+  border-radius: 7px;
+  border: 1px solid;
+  font-family: "Poppins";
+  padding: 1vh 10vw;
+  width:50vw;
+  height: 50vh;
+}
+
+.login-btn{
+  border-color: #000;
+  color: rgb(109, 109, 109);
+  font-size: 1.2rem;
+  padding: 1vh 1vw;
+}
+
+.login-btn:hover{
+  background-color: #d6ebfb;
+  color: rgb(109, 109, 109);
+}
+
+.login-container {
+  width:100%;
+  padding:70px 0px 70px 0px;
+  height: 100vh;
+  background-color: #d6ebfb;
+}
+
+.login-section{
+  margin: 4vh 0;
+}
+
+.login-text{
+  color: rgb(87, 107, 255);
+  margin-bottom: 2vh;
+}
+
+.social-button{
+  border-color: #000;
+  color: rgb(109, 109, 109);
+  padding: 2vh 1vw;
+}
+
+.social-button:hover{
+  background-color: #d6ebfb;
+  color: rgb(109, 109, 109);
+}
+
 .welcome-text{
   color:rgb(87, 107, 255);
   font-family: "Poppins";
   font-size: 3.5rem;
   font-weight: 700;
+
+  animation: fadein 0.5s;
 }
 
 /* Bootstrap Classes */
@@ -120,6 +173,13 @@ code {
   box-shadow: 0 0px 8px #ccc;
   font-family: "Roboto";
   margin-bottom: 3vh;
+
+  animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .card-header{
@@ -163,3 +223,26 @@ code {
   font-size: 1.8rem;
   font-weight: 700;
 }
+
+.nav-item{
+  margin-left: 0.5vw;
+}
+
+/* Buffer */
+
+.fill{
+  height: 100vh;
+  width: 1000vw;
+  background-color: white;
+  margin: 0;
+  padding-left: 50vw;
+  padding-right: 50vw;
+}
+
+
+
+  .or{
+    background-color: #F3F5F6;
+    font-size: 1.4rem;
+    padding: 0px 10px;
+  }

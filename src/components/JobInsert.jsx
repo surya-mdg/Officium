@@ -10,11 +10,11 @@ function JobInsert()
             </div>
             <div className="row">
                 <div className="container form-box">
-                    <form onSubmit={(event) => {event.preventDefault();}} className="create-note text-left">
+                    <form onSubmit={(event) => {event.preventDefault(); console.log("Hello");}} className="create-note text-left">
                         <div className="row g-0">
                             <FormInput name="Company Name" type="text" fill={false}/>
                             <div className="col-lg-6 form-section">
-                                <label for="exampleInputEmail1" className="form-label col-md-12">Job Type</label>
+                                <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Job Type</label>
                                 <select className="form-select col-md-6  form-style" aria-label="Default select example">
                                     <option selected>Select Type</option>
                                     <option value="1">Internship</option>
