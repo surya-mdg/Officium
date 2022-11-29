@@ -4,18 +4,17 @@ import FormInput from "./FormInput";
 
 //Contains form inputs as name, phoneNo, personalEmail, collegeEmail, degree, course, uniCGPA, gradeCGPA, gender, usn, backlogs, resume.
 
-function DetailSection()
+function DetailSection(props)
 {
     function FormSubmit(event)
     {
          event.preventDefault();
 
         const target = event.target;
-        const studentDetails = {name: target.name.value, phoneNo: target.phoneNo.value, personalEmail: target.personalEmail.value, collegeEmail: target.collegeEmail.value,
+        const studentDetails = {id: props.user.userId, name: target.name.value, phoneNo: target.phoneNo.value, personalEmail: target.personalEmail.value, collegeEmail: target.collegeEmail.value,
                                 degree: target.degree.value, course: target.course.value, uniCGPA: target.uniCGPA.value, gradeCGPA: target.gradeCGPA.value,
                                  usn: target.usn.value, gender: target.gender.value, backlogs: target.backlogs.value, resume: target.resume.value};
         
-        console.log(studentDetails);
         Axios.post("http://localhost:3001/student", studentDetails).then((res) => {
             console.log(res.data);
         });

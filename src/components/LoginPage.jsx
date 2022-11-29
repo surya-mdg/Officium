@@ -1,43 +1,35 @@
 import React, {useState, useEffect} from "react";
+import {Navigate} from "react-router-dom";
+import Axios from "axios";
 import LoginOption from "./LoginOption";
 
-function Login()
+function Login(props)
 {
     const [option,setOption] = useState(true);
     const [student,setStudent] = useState(false);
 
-    const [user, setUser] = useState(null);
+    const [userName, setUserName] = useState("");
+    const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:3001/login/success", {
-        mode:"no-cors",
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200){console.log("Hello");}
-        })
-        .then((resObject) => {
-          setUser(resObject.user.displayName);
-          console.log(resObject.user.displayName);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
+    Axios.get("http://localhost:3001/login/success",{withCredentials: true}).then((res) => {
+      setUserName(res.data.userName);
+      setUserId(res.data.userId);
+    }).catch((err) => {
+      console.log(err);
+    });
   }, []);
 
     function SetOption(op)
     {
-        setOption(false);
-        setStudent(op);
+      setOption(false);
+      setStudent(op);
+      props.SetStudent(op);
+    }
+
+    if(userId !== ""){
+      props.AddUser({userName: userName, userId: userId});
+      return <Navigate to="/about"/>;
     }
 
     function Google()
@@ -51,7 +43,7 @@ function Login()
             return (
                 <div className="login-box">
                     <div className="row login-section">
-                        <h1 className="login-text">Login As A {user}</h1>
+                        <h1 className="login-text">Login As A Student</h1>
                     </div>
                     <div className="row login-section" style={{marginTop: "8vh"}}>
                         <button type="button" className="btn btn-outline-secondary social-button">

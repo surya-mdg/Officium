@@ -1,5 +1,6 @@
 import './App.css';
 import React, {useState} from 'react';
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import JobSection from "./components/JobSection";
 import JobInsert from "./components/JobInsert";
@@ -8,7 +9,13 @@ import LoginPage from "./components/LoginPage";
 
 function App() {
   const [jobs,displayJobs] = useState(true);
-  const [student,setUser] = useState(true);
+  const [student,setStudent] = useState(true);
+  const [user, setUser] = useState({});
+
+  function AddUser(newUser)
+  {
+    setUser(newUser);
+  }
 
   function ViewJobs(showJobs)
   {
@@ -18,9 +25,9 @@ function App() {
   function ViewStudent()
   {
     if(!jobs)
-      return <DetailSection/>;
+      return <><Navbar changePage={ViewJobs}/><DetailSection user={user}/></>;
     else
-      return <JobSection/>;
+      return <><Navbar changePage={ViewJobs}/><JobSection user={user}/></>;
   }
 
   function ViewPC()
@@ -31,9 +38,12 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Navbar changePage={ViewJobs}/>
-      {student ? ViewStudent() : ViewPC()} */}
-      <LoginPage/>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LoginPage AddUser={AddUser} SetView={(value) => setStudent(value)}/>}/>
+          {student ? <Route path="/about" element={ViewStudent()}/> : <Route path="/about" element={ViewPC()}/>}
+        </Routes>
+      </Router>
     </div>
   );
 }

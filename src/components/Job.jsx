@@ -68,7 +68,7 @@ function Job(props)
                 </div>  
                 <div className="row job-body-footer d-flex align-items-center justify-content-center">
                     <div className="col-md-3">
-                        <button type="button" className="btn btn-primary btn-apply">Apply</button>
+                        <button type="button" className="btn btn-primary btn-apply" onClick={() => props.apply(props.data.name)}>Apply</button>
                     </div>
                 </div>             
             </div>
