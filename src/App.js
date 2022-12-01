@@ -2,14 +2,17 @@ import './App.css';
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Navbar from "./components/Navbar";
+// Student
 import JobSection from "./components/JobSection";
-import JobInsert from "./components/JobInsert";
 import DetailSection from "./components/DetailSection";
 import LoginPage from "./components/LoginPage";
+// Placement Office
+import JobInsert from "./components/JobInsert";
+import JobStats from "./components/placement/JobStats";
 
 function App() {
   const [jobs,displayJobs] = useState(true);
-  const [student,setStudent] = useState(true);
+  const [student,setStudent] = useState(false);
   const [user, setUser] = useState({});
 
   function AddUser(newUser)
@@ -33,7 +36,9 @@ function App() {
   function ViewPC()
   {
     if(!jobs)
-      return <JobInsert/>;
+      return <><Navbar changePage={ViewJobs}/><JobInsert/></>;
+    else
+      return <><Navbar changePage={ViewJobs}/><JobStats/></>;
   }
 
   return (

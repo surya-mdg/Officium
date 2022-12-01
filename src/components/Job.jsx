@@ -39,6 +39,22 @@ function Job(props)
             return <WorkHistoryIcon fontSize="large" style={{transform: "scale(1.3)"}}/>;
     }
 
+    function Footer()
+    {
+        if(props.stats)
+            return (
+            <div className="col-md-3">
+                <h6 className="stats" style={{width:"100%"}}><span style={{fontWeight:700}}>Students Applied: </span>{props.total}</h6>
+            </div>
+            );
+        else
+        return (
+            <div className="col-md-3">
+                <button type="button" className="btn btn-primary btn-apply" onClick={() => props.apply(props.data.name)}>Apply</button>
+            </div>
+            );
+    }
+
     return(
         <div className="card">
             <div className="card-header">
@@ -67,9 +83,7 @@ function Job(props)
                     <JobDate type="Interview Date: " date={CheckDate(props.data.interviewDate)}/>
                 </div>  
                 <div className="row job-body-footer d-flex align-items-center justify-content-center">
-                    <div className="col-md-3">
-                        <button type="button" className="btn btn-primary btn-apply" onClick={() => props.apply(props.data.name)}>Apply</button>
-                    </div>
+                    {Footer()}
                 </div>             
             </div>
         </div>

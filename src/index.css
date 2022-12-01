@@ -150,6 +150,12 @@ code {
   color: rgb(109, 109, 109);
 }
 
+.stats{
+  font-size: 1.5rem;
+  font-family: "Ubuntu";
+  font-weight: 400;
+}
+
 .welcome-text{
   color:rgb(87, 107, 255);
   font-family: "Poppins";

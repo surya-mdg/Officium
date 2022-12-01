@@ -42,9 +42,9 @@ function DetailSection(props)
                                 </select>
                             </div>
                             <div className="col-lg-6 form-section">
-                                <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Course</label>
+                                <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Department</label>
                                 <select className="form-select col-md-6  form-style" aria-label="Default select example" name="course">
-                                    <option defaultValue>Select Course</option>
+                                    <option defaultValue>Select Department</option>
                                     <option value="cse">Computer Science Engineering</option>
                                     <option value="ise">Information Science Engineering</option>
                                     <option value="eee">Electrical & Electronics Engineering</option>
