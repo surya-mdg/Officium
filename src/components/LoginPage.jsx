@@ -78,11 +78,10 @@ function Login(props)
                   <button type="button" className="btn btn-outline-secondary social-button">
                   <div className="row">
                       <div className="col-md-2" style={{margin: "1vh 0"}}>
-                      <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Icon"/>
                       </div>
-                      <div className="col-md-8" style={{fontSize: "1.3rem", margin: "1vh 0"}} onClick={PC}>
-                          Go To PC Site
-                      </div>
+                        <div className="col-md-8" style={{fontSize: "1.3rem", margin: "1vh 0"}} onClick={PC}>
+                            Go To PC Site
+                        </div>
                       </div>
                   </button>
               </div>

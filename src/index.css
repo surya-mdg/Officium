@@ -123,6 +123,11 @@ code {
   color: rgb(109, 109, 109);
 }
 
+.login-btn:active{
+  background-color: rgb(87, 107, 255);
+  /* color: rgb(109, 109, 109); */
+}
+
 .login-container {
   width:100%;
   padding:70px 0px 70px 0px;
@@ -198,11 +203,21 @@ code {
 
 .card-duration{
   border-left: 0.5px solid;
-  border-color:rgb(205, 205, 205);
+  border-color:rgb(123, 123, 123);
 }
 
 .card-footer{
   margin-top: auto;
+}
+
+.dropdown{
+  border-right: 2px solid;
+  border-color: rgb(156, 156, 156);
+  font-family: "Montserrat";
+}
+
+.dropdown-toggle{
+  background-color: rgb(87, 107, 255);
 }
 
 .form{

@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
+import Axios from "axios";
 import JobLabel from "./JobLabel";
 import JobDate from "./JobDate";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -8,6 +9,16 @@ import LockIcon from '@mui/icons-material/Lock';
 function Job(props)
 {
     const date = new Date();
+    const [branches, setBranch] = useState([]);
+    const [totalStudents, setTotalStudents] = useState(0);
+
+    useEffect(() => {
+        Axios.post("http://localhost:3001/stats",{name: props.data.name, branches: branches}).then((res) => {
+          setTotalStudents(res.data.total);
+        }).catch((err) => {
+          console.log(err);
+        });
+      }, [props.data.name, branches]);
 
     function CheckDate(sentDate)
     {
@@ -39,13 +50,44 @@ function Job(props)
             return <WorkHistoryIcon fontSize="large" style={{transform: "scale(1.3)"}}/>;
     }
 
+    function SetBranch(event)
+    {
+        const { value, checked } = event.target;
+
+        if(checked)
+        {
+            setBranch((prev) => {
+                return ([...prev,event.target.value]);
+            });
+        }
+        else
+        {
+            setBranch(branches.filter((b) => b!==value))
+        }
+    }
+
     function Footer()
     {
         if(props.stats)
             return (
-            <div className="col-md-3">
-                <h6 className="stats" style={{width:"100%"}}><span style={{fontWeight:700}}>Students Applied: </span>{props.total}</h6>
-            </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="dropdown">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter Branch</button>
+                            <ul className="dropdown-menu">
+                                <li><input className="form-check-input" type="checkbox" value="CSE" id="flexCheckDefault" onChange={SetBranch}/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Computer Science Engineering</label></li>
+                                <li><input className="form-check-input" type="checkbox" value="ISE" id="flexCheckDefault" onChange={SetBranch}/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Information Science Engineering</label></li>
+                                <li><input className="form-check-input" type="checkbox" value="ECE" id="flexCheckDefault" onChange={SetBranch}/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Electronics & Communication Engineering</label></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <h6 className="stats" style={{width:"100%"}}><span style={{fontWeight:700}}>Students Applied: </span>{totalStudents}</h6>
+                    </div>
+                </div>
             );
         else
         return (
@@ -82,7 +124,7 @@ function Job(props)
                     <JobDate type="Test Date: " date={CheckDate(props.data.testDate)}/>
                     <JobDate type="Interview Date: " date={CheckDate(props.data.interviewDate)}/>
                 </div>  
-                <div className="row job-body-footer d-flex align-items-center justify-content-center">
+                <div className="row job-body-footer align-items-center justify-content-center">
                     {Footer()}
                 </div>             
             </div>
