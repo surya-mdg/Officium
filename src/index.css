@@ -51,6 +51,10 @@ code {
   padding: 0 2vw;
 }
 
+.form-login-section{
+  margin: 2vh 0;
+}
+
 .form-style{
   font-family: "Space Mono";
   font-size: 1.2rem;
@@ -217,7 +221,7 @@ code {
 }
 
 .dropdown-toggle{
-  background-color: rgb(87, 107, 255);
+  background-color: rgb(91, 59, 255);
 }
 
 .form{
