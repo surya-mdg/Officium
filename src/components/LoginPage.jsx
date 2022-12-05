@@ -17,6 +17,7 @@ function Login(props)
     Axios.get("http://localhost:3001/login/success",{withCredentials: true}).then((res) => {
       setUserName(res.data.userName);
       setUserId(res.data.userId);
+      console.log("userId: "+ res.data.userId);
     }).catch((err) => {
       console.log(err);
     });
@@ -25,11 +26,12 @@ function Login(props)
     function SetOption(op)
     {
       setOption(false);
-      setStudent(op);
+      setStudent(!op);
       props.SetView(op);
     }
 
     if(userId !== ""){
+      console.log("User Id: "+userId);
       props.AddUser({userName: userName, userId: userId});
       return <Navigate to="/about"/>;
     }
@@ -67,12 +69,12 @@ function Login(props)
                         <h1 className="login-text">Login As A Student</h1>
                     </div>
                     <div className="row login-section" style={{marginTop: "8vh"}}>
-                        <button type="button" className="btn btn-outline-secondary social-button">
+                        <button type="button" className="btn btn-outline-secondary social-button" onClick={Google}>
                           <div className="row">
                             <div className="col-md-2" style={{margin: "1vh 0"}}>
                               <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Icon"/>
                             </div>
-                            <div className="col-md-8" style={{fontSize: "1.3rem", margin: "1vh 0"}} onClick={Google}>
+                            <div className="col-md-8" style={{fontSize: "1.3rem", margin: "1vh 0"}} >
                                 Sign in with Google
                             </div>
                           </div>

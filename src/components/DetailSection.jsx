@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Axios from "axios";
 import FormInput from "./FormInput";
 
@@ -6,18 +6,80 @@ import FormInput from "./FormInput";
 
 function DetailSection(props)
 {
+    const [studentDetails,setDetails] = useState({id: "", name: "", phoneNo: "", personalEmail: "", collegeEmail: "",
+        degree: "", course: "", uniCGPA: "", gradeCGPA: "",
+         usn: "", gender: "", backlogs: "", resume: ""});
+
     function FormSubmit(event)
     {
-         event.preventDefault();
-
-        const target = event.target;
-        const studentDetails = {id: props.user.userId, name: target.name.value, phoneNo: target.phoneNo.value, personalEmail: target.personalEmail.value, collegeEmail: target.collegeEmail.value,
-                                degree: target.degree.value, course: target.course.value, uniCGPA: target.uniCGPA.value, gradeCGPA: target.gradeCGPA.value,
-                                 usn: target.usn.value, gender: target.gender.value, backlogs: target.backlogs.value, resume: target.resume.value};
+        event.preventDefault();
         
         Axios.post("http://localhost:3001/student", studentDetails).then((res) => {
             console.log(res.data);
         });
+    }
+
+    useEffect(() => {
+        Axios.post("http://localhost:3001/getDetails",{id:props.userId}).then((res) => {
+          setDetails(res.data);
+        }).catch((err) => {
+          console.log(err);
+        });
+    }, [props.userId]);
+
+    function EnterDetails(event)
+    {
+        setDetails((prev) => {
+            return {...prev,[event.target.name]: event.target.value};
+        });
+    }
+
+    function SetDegree(value)
+    {
+        switch(value)
+        {
+            case "be":
+                return "B.E";
+            case "mtech":
+                return "M.Tech";
+            default:
+                return "Select Degree";
+        }
+    }
+
+    function SetCourse(value)
+    {
+        switch(value)
+        {
+            case "cse":
+                return "Computer Science Engineering";
+            case "ise":
+                return "Information Science Engineering";
+            case "eee":
+                return "Electrical & Electronics Engineering";
+            case "ece":
+                return "Electronics & Communication Engineering";
+            case "me":
+                return "Mechanical Engineering";
+            case "cv":
+                return "Civil Engineering";
+            default:
+                return "Select Course";
+        }
+    }
+
+    function SetGender(value)
+    {
+        switch(value){
+            case "Male":
+                return "Male";
+            case "Female":
+                return "Female";
+            case "Other":
+                return "Other";
+            default:
+                return "Select Gender";
+        }
     }
 
     return(
@@ -29,50 +91,44 @@ function DetailSection(props)
                 <div className="container form-box">
                     <form onSubmit={(event) => FormSubmit(event)} className="create-note text-left">
                         <div className="row g-0">
-                            <FormInput name="Name" tag="name" type="text" fill={false}/>
-                            <FormInput name="Phone Number" tag="phoneNo" type="text" fill={false}/>
-                            <FormInput name="Personal Email" tag="personalEmail" type="email" fill={false}/>
-                            <FormInput name="College Email" tag="collegeEmail" type="email" fill={false}/>
+                            <FormInput name="Name" tag="name" type="text" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.name}/>
+                            <FormInput name="Phone Number" tag="phoneNo" type="text" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.phoneNo}/>
+                            <FormInput name="Personal Email" tag="personalEmail" type="email" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.personalEmail}/>
+                            <FormInput name="College Email" tag="collegeEmail" type="email" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.collegeEmail}/>
                             <div className="col-lg-6 form-section">
                                 <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Degree</label>
-                                <select className="form-select col-md-6  form-style" aria-label="Default select example" name="degree">
-                                    <option defaultValue>Select Degree</option>
-                                    <option value="be">B.E</option>
-                                    <option value="mtech">M.Tech</option>
+                                <select className="form-select col-md-6  form-style" aria-label="Default select example" name="degree" onChange={EnterDetails}>
+                                    <option defaultValue>{SetDegree(studentDetails.degree)}</option>        
+                                    {studentDetails.degree==="be" ? null : <option value="be">B.E</option>}
+                                    {studentDetails.degree==="mtech" ? null : <option value="mtech">M.Tech</option>}
                                 </select>
                             </div>
                             <div className="col-lg-6 form-section">
                                 <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Department</label>
-                                <select className="form-select col-md-6  form-style" aria-label="Default select example" name="course">
-                                    <option defaultValue>Select Department</option>
-                                    <option value="cse">Computer Science Engineering</option>
-                                    <option value="ise">Information Science Engineering</option>
-                                    <option value="eee">Electrical & Electronics Engineering</option>
-                                    <option value="ece">Electronics & Communication Engineering</option>
-                                    <option value="me">Mechanical Engineering</option>
-                                    <option value="cv">Civil Engineering</option>
+                                <select className="form-select col-md-6  form-style" aria-label="Default select example" name="course" onChange={EnterDetails} >
+                                    <option defaultValue>{SetCourse(studentDetails.course)}</option>
+                                    {studentDetails.course==="cse" ? null : <option value="cse">Computer Science Engineering</option>}
+                                    {studentDetails.course==="ise" ? null : <option value="ise">Information Science Engineering</option>}
+                                    {studentDetails.course==="eee" ? null : <option value="eee">Electrical & Electronics Engineering</option>}
+                                    {studentDetails.course==="ece" ? null : <option value="ece">Electronics & Communication Engineering</option>}
+                                    {studentDetails.course==="me" ? null : <option value="me">Mechanical Engineering</option>}
+                                    {studentDetails.course==="cv" ? null : <option value="cv">Civil Engineering</option>}
                                 </select>
                             </div>
-                            <FormInput name="CGPA (University)" tag="uniCGPA" type="text" fill={false}/>
-                            <FormInput name="CGPA / Percentage (Grade 12)" tag="gradeCGPA" type="text" fill={false}/>
+                            <FormInput name="CGPA (University)" tag="uniCGPA" type="text" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.uniCGPA}/>
+                            <FormInput name="CGPA / Percentage (Grade 12)" tag="gradeCGPA" type="text" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.gradeCGPA}/>
                             <div className="col-lg-6 form-section">
                                 <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Gender</label>
-                                <div className="form-check col-md-3 form-check-inline">
-                                    <input className="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Male"/>
-                                    <label className="form-check-label form-style" htmlFor="inlineRadio1">Male</label>
-                                </div>
-                                <div className="form-check col-md-3 form-check-inline">
-                                    <input className="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Female"/>
-                                    <label className="form-check-label form-style" htmlFor="inlineRadio2">Female</label>
-                                </div>
-                                <div className="form-check col-md-3 form-check-inline">
-                                    <input className="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Other"/>
-                                    <label className="form-check-label form-style" htmlFor="inlineRadio2">Other</label>
-                                </div>
+                                <select className="form-select col-md-6  form-style" aria-label="Default select example" name="gender" onChange={EnterDetails}>
+                                    <option defaultValue>{SetGender(studentDetails.gender)}</option>        
+                                    {studentDetails.gender==="Male" ? null : <option value="Male">Male</option>}
+                                    {studentDetails.gender==="Female" ? null : <option value="Female">Female</option>}
+                                    {studentDetails.gender==="Other" ? null : <option value="Other">Other</option>}
+                                </select>
                             </div>
-                            <FormInput name="USN" tag="usn" type="text" fill={false}/>
-                            <FormInput name="Active Backlogs" tag="backlogs" type="number" fill={false}/>
-                            <FormInput name="Resume (Google Drive Link)" tag="resume" type="text" fill={false}/>
+                            <FormInput name="USN" tag="usn" type="text" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.usn}/>
+                            <FormInput name="Active Backlogs" tag="backlogs" type="number" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.backlogs}/>
+                            <FormInput name="Resume (Google Drive Link)" tag="resume" type="text" fill={false} change={(value) => EnterDetails(value)} setValue={studentDetails.resume}/>
                         </div>
                         <div className="row g-0 d-flex justify-content-center" style={{margin: "2vh 1vw", padding: "0.5vh 1vw"}}>
                             <div className="col-md-1">

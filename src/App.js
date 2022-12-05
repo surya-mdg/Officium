@@ -17,6 +17,7 @@ function App() {
 
   function AddUser(newUser)
   {
+    console.log("okay: "+newUser.userId);
     setUser(newUser);
   }
 
@@ -28,25 +29,25 @@ function App() {
   function ViewStudent()
   {
     if(!jobs)
-      return <><Navbar changePage={ViewJobs}/><DetailSection user={user}/></>;
+      return <><Navbar changePage={ViewJobs} student={true}/><DetailSection userId={user.userId}/></>;
     else
-      return <><Navbar changePage={ViewJobs}/><JobSection user={user}/></>;
+      return <><Navbar changePage={ViewJobs} student={true}/><JobSection user={user}/></>;
   }
 
   function ViewPC()
   {
     if(!jobs)
-      return <><Navbar changePage={ViewJobs}/><JobInsert/></>;
+      return <><Navbar changePage={ViewJobs} student={false}/><JobInsert/></>;
     else
-      return <><Navbar changePage={ViewJobs}/><JobStats/></>;
+      return <><Navbar changePage={ViewJobs} student={false}/><JobStats/></>;
   }
 
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<LoginPage AddUser={AddUser} SetView={(value) => setStudent(value)}/>}/>
-          {student ? <Route path="/about" element={ViewStudent()}/> : <Route path="/about" element={ViewPC()}/>}
+          <Route path="/" element={<LoginPage AddUser={AddUser} SetView={(value) => { setStudent(value)}}/>}/>
+          {student ? <Route path="/about" element={ViewPC()}/> : <Route path="/about" element={ViewStudent()}/>}
         </Routes>
       </Router>
     </div>
