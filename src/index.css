@@ -148,10 +148,16 @@ code {
   margin-bottom: 2vh;
 }
 
+.social-btn-div{
+  padding: 10px 25px;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
+}
+
 .social-button{
   border-color: #000;
   color: rgb(109, 109, 109);
-  padding: 2vh 1vw;
+  padding: 0.5vh 1vw;
 }
 
 .social-button:hover{
@@ -266,8 +272,88 @@ code {
 
 
 
-  .or{
-    background-color: #F3F5F6;
-    font-size: 1.4rem;
+.or{
+    background-color: #ffffff;
+    font-size: 1rem;
     padding: 0px 10px;
-  }
+    margin-top: 100px;
+}
+
+.login-col{
+  width:50vw;
+  height: 100vh;
+}
+
+.filld {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+}
+.filld img {
+  width: 100%;
+  min-height: 50%
+}
+
+.login-container-2 {
+  width:100%;
+  padding:70px 0px 70px 0px;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+.login-box-2{
+  background: #f6fbff;
+  border-radius: 7px;
+  font-family: "Poppins";
+  padding: 1vh 10vw;
+  width:50vw;
+}
+
+.login-title{
+  position: absolute;
+  font-family: "Poppins";
+  color: white;
+  font-size: 7rem;
+  top: 32vh;
+  left: 3.3vw;
+}
+
+.login-p{
+  position: absolute;
+  font-family: "Poppins";
+  color: white;
+  font-size: 2.4rem;
+  top: 49vh;
+  left: 5.0vw;
+}
+
+.login-text-box{
+  border-style: none none solid none;
+  border-radius: 0;
+  border-width: 2px;
+  border-color: #000;
+  padding-left: 0;
+  padding-bottom: 1vh;
+  background: #f6fbff;
+}
+
+.login-text-box:focus{
+  border-style: none none solid none;
+}
+
+.or-h2{
+  width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid rgb(157, 157, 157); 
+   line-height: 0.1em;
+   margin: 2vh 0; 
+   font-size: 0.9rem;
+   color: rgb(145, 145, 145);
+}
+
+.or-span{
+  background:rgb(255, 255, 255); 
+    padding:0 10px; 
+}

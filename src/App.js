@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 // Student
 import JobSection from "./components/JobSection";
 import DetailSection from "./components/DetailSection";
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/LoginPage2";
 // Placement Office
 import JobInsert from "./components/JobInsert";
 import JobStats from "./components/placement/JobStats";
@@ -17,7 +17,6 @@ function App() {
 
   function AddUser(newUser)
   {
-    console.log("okay: "+newUser.userId);
     setUser(newUser);
   }
 

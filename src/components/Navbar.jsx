@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Axios from "axios";
+import {Navigate} from "react-router-dom";
 import WorkIcon from '@mui/icons-material/Work';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import IconButton from "@mui/material/IconButton"
@@ -8,15 +9,25 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function Navbar(props)
 {
+    const [logout,setLogout] = useState(false);
+
     function Logout()
     {
         Axios.post("http://localhost:3001/logout",{id:"fd"}).then((res) => {
           console.log("Logout");
+          //setLogout(true);
         }).catch((err) => {
           console.log(err);
         });
-        console.log("Nice");
+
+        setLogout(true);
     }
+
+    if(logout)
+    {
+        return <Navigate to="/"/>;
+    }
+        
 
     function LogoChange()
     {
@@ -51,7 +62,7 @@ function Navbar(props)
                             </IconButton>
                         </li>
                         <li className="nav-item">
-                            <IconButton className="btn-navbar" onClick={Logout()} aria-label="add an alarm">
+                            <IconButton className="btn-navbar" onClick={() => Logout()} aria-label="add an alarm">
                                 <LogoutIcon fontSize="large"/>
                             </IconButton>
                         </li>

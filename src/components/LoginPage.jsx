@@ -33,6 +33,7 @@ function Login(props)
     if(userId !== ""){
       console.log("User Id: "+userId);
       props.AddUser({userName: userName, userId: userId});
+      console.log("lol");
       return <Navigate to="/about"/>;
     }
 
