@@ -1,19 +1,20 @@
 import './App.css';
 import React, {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import Navbar from "./components/Navbar";
 // Student
-import JobSection from "./components/JobSection";
-import DetailSection from "./components/DetailSection";
-import LoginPage from "./components/LoginPage2";
+import JobSection from "./components/student/JobSection";
+import DetailSection from "./components/student/DetailSection";
+import LoginPage from "./components/LoginPage";
 // Placement Office
-import JobInsert from "./components/JobInsert";
+import JobInsert from "./components/placement/JobInsert";
 import JobStats from "./components/placement/JobStats";
 
 function App() {
   const [jobs,displayJobs] = useState(true);
   const [student,setStudent] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({userName: "", userId: ""});
 
   function AddUser(newUser)
   {
@@ -29,8 +30,11 @@ function App() {
   {
     if(!jobs)
       return <><Navbar changePage={ViewJobs} student={true}/><DetailSection userId={user.userId}/></>;
+    else if(user.userId === "")
+      return <Navigate to="/"/>;
     else
-      return <><Navbar changePage={ViewJobs} student={true}/><JobSection user={user}/></>;
+      return <><Navbar changePage={ViewJobs} student={true}/><JobSection user={user} userId={user.userId}/></>;
+      
   }
 
   function ViewPC()

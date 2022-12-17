@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import Axios from "axios";
-import FormInput from "./FormInput";
+import FormInput from "../FormInput";
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
 function JobInsert()
 {
     const [branches, setBranch] = useState([]);
+    const [added, setAdded] = useState(false);
 
     function FormSubmit(event)
     {
@@ -16,7 +18,7 @@ function JobInsert()
                                  logoUrl: target.logoUrl.value, minCgpa: target.minCgpa.value, maxBacklogs: target.maxActiveBacklogs.value, validBranches: branches};
         
         Axios.post("http://localhost:3001/addJob", jobDetails).then((res) => {
-            console.log(res.data);
+            console.log("New Job Added");
         });
     }
 
@@ -49,7 +51,7 @@ function JobInsert()
                             <div className="col-lg-6 form-section">
                                 <label htmlFor="exampleInputEmail1" className="form-label col-md-12">Job Type</label>
                                 <select className="form-select col-md-6  form-style" aria-label="Default select example" name="jobType">
-                                    <option selected>Select Type</option>
+                                    <option defaultValue>Select Type</option>
                                     <option value="Internship">Internship</option>
                                     <option value="Full Time">Full Time</option>
                                 </select>
@@ -95,14 +97,13 @@ function JobInsert()
                         </div>
                         <div className="row g-0 d-flex justify-content-center" style={{margin: "2vh 1vw", padding: "0.5vh 1vw"}}>
                             <div className="col-md-1">
-                                <button type="submit" className="btn btn-primary btn-apply">Add</button>
+                                <button type="submit" onClick={() => setAdded(true)} className="btn btn-primary btn-apply">{(added) ? <DoneOutlineIcon fontSize="small"/> : "Add"}</button>
                             </div>
                         </div>
                     </form>              
                 </div>
             </div>
-        </div>
-        
+        </div>    
     );
 }
 

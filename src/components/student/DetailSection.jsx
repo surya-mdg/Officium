@@ -1,31 +1,42 @@
 import React, {useState, useEffect} from "react";
 import Axios from "axios";
-import FormInput from "./FormInput";
+import FormInput from "../FormInput";
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
 //Contains form inputs as name, phoneNo, personalEmail, collegeEmail, degree, course, uniCGPA, gradeCGPA, gender, usn, backlogs, resume.
 
 function DetailSection(props)
 {
-    const [studentDetails,setDetails] = useState({id: "", name: "", phoneNo: "", personalEmail: "", collegeEmail: "",
+    const [saved,setSaved] = useState(false);
+
+    const [studentDetails,setDetails] = useState({id: props.userId, name: "", phoneNo: "", personalEmail: "", collegeEmail: "",
         degree: "", course: "", uniCGPA: "", gradeCGPA: "",
          usn: "", gender: "", backlogs: "", resume: ""});
+
+    useEffect(() => {
+        if(typeof props.userId !== 'undefined')
+        {
+        Axios.post("http://localhost:3001/getDetails",{id:String(props.userId)}).then((res) => {
+          setDetails(res.data);
+          console.log(props.userId);
+        }).catch((err) => {
+          console.log(err);
+        });}
+        else{
+            console.log("UNDEFIDNED");
+        }
+        console.log("gmail: "+props.userId);
+    }, [props.userId]);
 
     function FormSubmit(event)
     {
         event.preventDefault();
         
-        Axios.post("http://localhost:3001/student", studentDetails).then((res) => {
+        console.log(studentDetails);
+        Axios.post("http://localhost:3001/student", {...studentDetails,id: props.userId}).then((res) => {
             console.log(res.data);
         });
     }
-
-    useEffect(() => {
-        Axios.post("http://localhost:3001/getDetails",{id:props.userId}).then((res) => {
-          setDetails(res.data);
-        }).catch((err) => {
-          console.log(err);
-        });
-    }, [props.userId]);
 
     function EnterDetails(event)
     {
@@ -132,14 +143,13 @@ function DetailSection(props)
                         </div>
                         <div className="row g-0 d-flex justify-content-center" style={{margin: "2vh 1vw", padding: "0.5vh 1vw"}}>
                             <div className="col-md-1">
-                                <button type="submit" className="btn btn-primary btn-apply">Save</button>
+                                <button type="submit" onClick={() => setSaved(true)} className="btn btn-primary btn-apply">{(saved ? <DoneOutlineIcon fontSize="small"/> : "Save")}</button>
                             </div>
                         </div>
                     </form>              
                 </div>
             </div>
-        </div>
-        
+        </div>      
     );
 }
 

@@ -3,14 +3,29 @@ import Axios from "axios";
 import JobLabel from "./JobLabel";
 import JobDate from "./JobDate";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import LockIcon from '@mui/icons-material/Lock';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArticleIcon from '@mui/icons-material/Article';
+import xlsx from "json-as-xlsx";
 
 function Job(props)
 {
     const date = new Date();
     const [branches, setBranch] = useState([]);
+    const [applied, setApply] = useState(false);
+    const [lock, setLock] = useState(false);
     const [totalStudents, setTotalStudents] = useState(0);
+    const [del,setDelete] = useState(false);
+
+    let settings = {
+        fileName: props.data.name, // Name of the resulting spreadsheet
+        extraLength: 3, // A bigger number means that columns will be wider
+        writeMode: "writeFile", // The available parameters are 'WriteFile' and 'write'. This setting is optional. Useful in such cases https://docs.sheetjs.com/docs/solutions/output#example-remote-file
+        writeOptions: {}, // Style options from https://docs.sheetjs.com/docs/api/write-options
+        RTL: false, // Display the columns from right-to-left (the default value is false)
+    }
 
     useEffect(() => {
         Axios.post("http://localhost:3001/stats",{name: props.data.name, branches: branches}).then((res) => {
@@ -18,7 +33,60 @@ function Job(props)
         }).catch((err) => {
           console.log(err);
         });
-      }, [props.data.name, branches]);
+
+        if(!props.stats)
+        {
+            Axios.post("http://localhost:3001/checkStatus",{name: props.data.name, id: String(props.userId)}).then((res) => {
+                setApply(res.data.status);
+                setLock(res.data.lock);
+                console.log(res.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+      }, [props.data.name, branches, props.userId, props.stats]);
+    
+    function GetStudentList()
+    {
+        Axios.post("http://localhost:3001/getList",{name: props.data.name}).then((res) => {
+
+              xlsx([
+                {
+                  sheet: "Company",
+                  columns: [
+                    { label: "Name", value: "name" }, // Top level data
+                    { label: "Mobile Number", value: "phoneNo"}, // Custom format
+                    { label: "Personal Email", value: "personalEmail"},
+                    { label: "College Email", value: "collegeEmail"},
+                    { label: "Course", value: "course"},
+                    { label: "Degree", value: "degree"},
+                    { label: "USN", value: "usn"},
+                    { label: "Gender", value: "gender"},
+                    { label: "College CGPA", value: "uniCGPA"},
+                    { label: "12th CGPA", value: "gradeCGPA"},
+                    { label: "Backlogs", value: "backlogs"},
+                    { label: "Resume", value: "resume"}, // Run functions
+                  ],
+                  content: res.data,
+                }
+              ], settings);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    function Delete()
+    {
+        if(del){
+            Axios.post("http://localhost:3001/delete",{name: props.data.name}).then((res) => {
+                console.log(props.data.name+" Deleted");
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+        else
+            setDelete(true);
+    }
 
     function CheckDate(sentDate)
     {
@@ -42,10 +110,13 @@ function Job(props)
 
     function Status(status)
     {
-        if((date.getTime() - new Date(props.data.lastDate).getTime()) > 0)
-            return <LockIcon fontSize="large" style={{transform: "scale(1.3)"}}/>;
-        else if(status==="applied")
+        if(props.stats)
+            return <button type="button" className="btn btn-success job-btn" style={{width:"100%", padding: "2vh 0"}} onClick={() => GetStudentList()}><ArticleIcon fontSize="large"/></button>;
+
+        if(applied)
             return <CheckBoxIcon fontSize="large" style={{transform: "scale(1.3)"}}/>;
+        else if((date.getTime() - new Date(props.data.lastDate).getTime()) > 0 || lock)
+            return <LockIcon fontSize="large" style={{transform: "scale(1.3)"}}/>;
         else
             return <WorkHistoryIcon fontSize="large" style={{transform: "scale(1.3)"}}/>;
     }
@@ -66,14 +137,38 @@ function Job(props)
         }
     }
 
+    function ButtonDisplay()
+    {
+        if(applied)
+        {
+            return <DoneOutlineIcon fontSize="small"/>;
+        }
+        if((date.getTime() - new Date(props.data.lastDate).getTime()) > 0 || lock)
+        {
+            return <LockIcon fontSize="small"/>;
+        }
+        else{
+            return "Apply";
+        }
+    }
+
+    function OnApply()
+    {
+        if((date.getTime() - new Date(props.data.lastDate).getTime()) <= 0 && !applied && !lock)
+        {
+            props.apply(props.data.name);
+            setApply(true);
+        }
+    }
+
     function Footer()
     {
         if(props.stats)
             return (
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter Branch</button>
+                            <button className="btn btn-secondary dropdown-toggle job-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{width:"100%"}}>Filter Branch</button>
                             <ul className="dropdown-menu">
                                 <li><input className="form-check-input" type="checkbox" value="CSE" id="flexCheckDefault" onChange={SetBranch}/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">Computer Science Engineering</label></li>
@@ -81,18 +176,27 @@ function Job(props)
                                     <label className="form-check-label" htmlFor="flexCheckDefault">Information Science Engineering</label></li>
                                 <li><input className="form-check-input" type="checkbox" value="ECE" id="flexCheckDefault" onChange={SetBranch}/>
                                     <label className="form-check-label" htmlFor="flexCheckDefault">Electronics & Communication Engineering</label></li>
+                                <li><input className="form-check-input" type="checkbox" value="EEE" id="flexCheckDefault" onChange={SetBranch}/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Electrical & Electronics Engineering</label></li>
+                                <li><input className="form-check-input" type="checkbox" value="ME" id="flexCheckDefault" onChange={SetBranch}/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Mechanical Engineering</label></li>
+                                <li><input className="form-check-input" type="checkbox" value="CV" id="flexCheckDefault" onChange={SetBranch}/>
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">Civil Engineering</label></li>
                             </ul>
                         </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <h6 className="stats" style={{width:"100%"}}><span style={{fontWeight:700}}>Students Applied: </span>{totalStudents}</h6>
+                    </div>
+                    <div className="col-md-4 dropdown">
+                        <button type="button" className="btn btn-danger job-btn" style={{width:"100%"}} onClick={() => Delete()}>{(del) ? "Confirm" : <DeleteIcon fontSize="small"/>}</button>
                     </div>
                 </div>
             );
         else
         return (
             <div className="col-md-3">
-                <button type="button" className="btn btn-primary btn-apply" onClick={() => props.apply(props.data.name)}>Apply</button>
+                <button type="button" className="btn btn-primary btn-apply" onClick={OnApply}>{ButtonDisplay()}</button>
             </div>
             );
     }
@@ -114,8 +218,8 @@ function Job(props)
             </div>
             <div className="card-body">
                 <div className="row job-body-head">
-                    <JobLabel name={props.data.type} type="type"/>
-                    <JobLabel name={props.data.role} type="role"/>
+                    <JobLabel name={props.data.jobType} type="type"/>
+                    <JobLabel name={props.data.jobRole} type="role"/>
                     <JobLabel name={props.data.duration} type="time"/>
                     <JobLabel name={props.data.salary} type="salary"/>
                 </div>
