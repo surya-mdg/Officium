@@ -29,7 +29,7 @@ function App() {
   function ViewStudent()
   {
     if(!jobs)
-      return <><Navbar changePage={ViewJobs} student={true}/><DetailSection userId={user.userId}/></>;
+      return <><Navbar changePage={ViewJobs} student={true}/><DetailSection userId={user.userId} changePage={ViewJobs}/></>;
     else if(user.userId === "")
       return <Navigate to="/"/>;
     else
@@ -40,7 +40,7 @@ function App() {
   function ViewPC()
   {
     if(!jobs)
-      return <><Navbar changePage={ViewJobs} student={false}/><JobInsert/></>;
+      return <><Navbar changePage={ViewJobs} student={false}/><JobInsert changePage={ViewJobs}/></>;
     else
       return <><Navbar changePage={ViewJobs} student={false}/><JobStats/></>;
   }

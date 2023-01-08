@@ -110,7 +110,9 @@ function Job(props)
 
     function Status(status)
     {
-        if(props.stats)
+        if(props.stats && (date.getTime() - new Date(props.data.lastDate).getTime()) <= 0)
+            return <button type="button" className="btn btn-secondary job-btn" style={{width:"100%", padding: "2vh 0"}} onClick={() => GetStudentList()}><ArticleIcon fontSize="large"/></button>;
+        else if(props.stats)
             return <button type="button" className="btn btn-success job-btn" style={{width:"100%", padding: "2vh 0"}} onClick={() => GetStudentList()}><ArticleIcon fontSize="large"/></button>;
 
         if(applied)
@@ -128,7 +130,7 @@ function Job(props)
         if(checked)
         {
             setBranch((prev) => {
-                return ([...prev,event.target.value]);
+                return ([...prev,String(event.target.value)]);
             });
         }
         else

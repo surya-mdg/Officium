@@ -19,6 +19,8 @@ function JobSection(props)
         Axios.post("http://localhost:3001/job", {company: company, id: String(props.userId)}).then((res) => {
             console.log(res.data);
         });
+
+        alert("Successfully applied for " + company);
     }
 
     return(

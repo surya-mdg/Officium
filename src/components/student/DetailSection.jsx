@@ -143,7 +143,7 @@ function DetailSection(props)
                         </div>
                         <div className="row g-0 d-flex justify-content-center" style={{margin: "2vh 1vw", padding: "0.5vh 1vw"}}>
                             <div className="col-md-1">
-                                <button type="submit" onClick={() => setSaved(true)} className="btn btn-primary btn-apply">{(saved ? <DoneOutlineIcon fontSize="small"/> : "Save")}</button>
+                                <button type="submit" onClick={() => {props.changePage(true); setSaved(true)}} className="btn btn-primary btn-apply">{(saved ? <DoneOutlineIcon fontSize="small"/> : "Save")}</button>
                             </div>
                         </div>
                     </form>              

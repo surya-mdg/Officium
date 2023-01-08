@@ -3,7 +3,7 @@ import Axios from "axios";
 import FormInput from "../FormInput";
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
-function JobInsert()
+function JobInsert(props)
 {
     const [branches, setBranch] = useState([]);
     const [added, setAdded] = useState(false);
@@ -97,7 +97,7 @@ function JobInsert()
                         </div>
                         <div className="row g-0 d-flex justify-content-center" style={{margin: "2vh 1vw", padding: "0.5vh 1vw"}}>
                             <div className="col-md-1">
-                                <button type="submit" onClick={() => setAdded(true)} className="btn btn-primary btn-apply">{(added) ? <DoneOutlineIcon fontSize="small"/> : "Add"}</button>
+                                <button type="submit" onClick={() => {props.changePage(true); setAdded(true);}} className="btn btn-primary btn-apply">{(added) ? <DoneOutlineIcon fontSize="small"/> : "Add"}</button>
                             </div>
                         </div>
                     </form>              
