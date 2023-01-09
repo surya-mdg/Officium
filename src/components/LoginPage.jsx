@@ -8,11 +8,13 @@ function Login(props)
     const [loginInfo, setInfo] = useState({email:"", password: ""});
     const [userName, setUserName] = useState("");
     const [userId, setUserId] = useState("");
+    const [pc,setPC] = useState(false);
 
   useEffect(() => {
     Axios.get("http://localhost:3001/login/success",{withCredentials: true}).then((res) => {
       setUserName(res.data.userName);
       setUserId(res.data.userId);
+      setPC(res.data.pc);
       console.log("userId: "+ res.data.userId);
     }).catch((err) => {
       console.log(err);
@@ -23,6 +25,13 @@ function Login(props)
       console.log("User Id: "+userId);
       props.AddUser({userName: userName, userId: userId});
       console.log("lol");
+      return <Navigate to="/about"/>;
+    }
+
+    if(pc)
+    {
+      console.log("hello");
+      props.SetView(true);
       return <Navigate to="/about"/>;
     }
 
@@ -49,6 +58,12 @@ function Login(props)
           props.SetView(true);
           setNavigate(res.data.result);
         }
+        else if(res.data.username)
+        {
+          alert("Invalid Password");
+        }
+        else
+          alert("Invalid User");
       }).catch((err) => {
         console.log(err);
       });
