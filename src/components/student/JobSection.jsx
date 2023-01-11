@@ -9,10 +9,14 @@ function JobSection(props)
     useEffect(() => {
         Axios.post("http://localhost:3001/listJobs",{withCredentials: true,id: String(props.userId)}).then((res) => {
             setJobs(res.data);
+            if(res.data.length === 0)
+            {
+                props.changePage(false);
+            }
         }).catch((err) => {
           console.log(err);
         });
-      }, [props.userId]);
+      }, [props.userId, props]);
 
     function Apply(company)
     {

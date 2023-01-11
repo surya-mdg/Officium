@@ -33,7 +33,7 @@ function App() {
     else if(user.userId === "")
       return <Navigate to="/"/>;
     else
-      return <><Navbar changePage={ViewJobs} student={true}/><JobSection user={user} userId={user.userId}/></>;
+      return <><Navbar changePage={ViewJobs} student={true}/><JobSection user={user} userId={user.userId} changePage={ViewJobs}/></>;
       
   }
 
